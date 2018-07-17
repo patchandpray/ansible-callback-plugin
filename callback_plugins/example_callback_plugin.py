@@ -1,0 +1,67 @@
+# written for python2.7
+# Make coding more python3-ish
+from __future__ import (absolute_import, division, print_function)
+__metaclass__ = type
+
+import requests
+from requests.auth import HTTPBasicAuth
+
+from ansible.plugins.callback import CallbackBase
+from ansible import constants as C
+from __main__ import cli
+
+DOCUMENTATION = '''
+    callback: example_callback_plugin
+    type: notification
+    short_description: Send callback on various runners to an API endpoint.
+    description:
+      - On ansible runner calls report state and task output to an API endpoint.
+      - Configuration via callback_config.ini, place the file in the same directory 
+        as the plugin.
+    requirements:
+      - python requests library
+      - HTTPBasicAuth library from python requests.auth
+      - ConfigParser for reading configuration file
+    '''
+
+class CallbackModule(CallbackBase):
+
+    '''
+    Callback to API endpoints on ansible runner calls.
+    '''
+
+    CALLBACK_VERSION = 2.0
+    CALLBACK_TYPE = 'notification'
+    CALLBACK_NAME = 'example_callback_plugin'
+
+    def __init__(self, *args, **kwargs):
+        # TODO - implement config parsing for variables
+        self.callback_url = 'http://127.0.0.1:5000/tasks'
+        self.username = 'admin'
+        self.password = 'password'
+        super(CallbackModule, self).__init__()
+
+    def v2_playbook_on_start(self, playbook):
+        self.playbook = playbook
+
+    def v2_playbook_on_play_start(self, play):
+        self.play = play
+        self.extra_vars = self.play.get_variable_manager().extra_vars
+
+    def v2_runner_on_ok(self, result):
+        payload = {'state': 'success',
+                   'task_name': result.task_name,
+                   'task_output' : result._result
+                  }
+        print('Sending to endpoint:\n{0}\n'.format(requests.post(self.callback_url, auth=(self.username,self.password), data=payload).json()))
+        pass
+
+    def v2_runner_on_failed(self, result, ignore_errors=False):
+        payload = {'state': 'failed',
+                   'task_name': result.task_name,
+                   'task_output' : result._result['msg']
+                  }
+        
+        print('Sending to endpoint:\n{0}\n'.format(requests.post(self.callback_url, auth=(self.username,self.password), data=payload).json()))
+        pass
+        

@@ -1,0 +1,19 @@
+#!/usr/bin/env ansible-playbook
+#
+---
+- name: call the callback plugin with a failed task
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+    output: b
+
+  tasks:
+  - debug:
+      var: test
+
+  - name: assert that output is a
+    assert:
+      that: output == 'a'
+      msg: output does not equal a
+    register: assert_register
