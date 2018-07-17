@@ -16,10 +16,8 @@ It is possible to expose configuration parameters to the callback plugin as extr
 - API Endpoint url
 - username
 - password
-- validate certs
 
-
-[inputs]
+[extra\_vars]
 callback\_url = the api endpoint callback url
 username = the username for api authentication
 password = the password for api authentication
@@ -50,6 +48,11 @@ All default available callback\_plugins can be found in your ansible install loc
 
 ## How to run
 
-### Using Makefile
+Be sure to have the api\_server provided running or have your own API endpoint available which supports the fields {'state, 'task\_name', task\_output'}
 
-### Manual setup
+### Using Makefile
+`make playbook`  
+You might have to change the extra vars passed for that makefile target to fit your configuration.
+
+### Manual
+`ansible-playbook playbook.yml -e callback_url=<http://api_host:port/tasks> -e username=<basic_auth_username> -e password=<basic_auth_password>`
