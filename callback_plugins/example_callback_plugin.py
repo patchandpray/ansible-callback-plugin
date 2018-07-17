@@ -10,6 +10,11 @@ from ansible.plugins.callback import CallbackBase
 from ansible import constants as C
 from __main__ import cli
 
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
+
 DOCUMENTATION = '''
     callback: example_callback_plugin
     type: notification
@@ -35,10 +40,8 @@ class CallbackModule(CallbackBase):
     CALLBACK_NAME = 'example_callback_plugin'
 
     def __init__(self, *args, **kwargs):
+      
         # TODO - implement config parsing for variables
-        self.callback_url = 'http://127.0.0.1:5000/tasks'
-        self.username = 'admin'
-        self.password = 'password'
         super(CallbackModule, self).__init__()
 
     def v2_playbook_on_start(self, playbook):
@@ -47,13 +50,18 @@ class CallbackModule(CallbackBase):
     def v2_playbook_on_play_start(self, play):
         self.play = play
         self.extra_vars = self.play.get_variable_manager().extra_vars
+        self.callback_url = self.extra_vars['callback_url']
+        self.username = self.extra_vars['username']
+        self.password = self.extra_vars['password']
+
+        print('\nExtra vars that were passed to playbook are accessible to the callback plugin by calling the variable_manager on the play object for the method v2_playbook_on_play_start:\nextra_vars: {0}'.format(self.extra_vars))
 
     def v2_runner_on_ok(self, result):
         payload = {'state': 'success',
                    'task_name': result.task_name,
                    'task_output' : result._result
                   }
-        print('Sending to endpoint:\n{0}\n'.format(requests.post(self.callback_url, auth=(self.username,self.password), data=payload).json()))
+        print('On a succesfull task - Sending to endpoint:\n{0}\n'.format(requests.post(self.callback_url, auth=(self.username,self.password), data=payload).json()))
         pass
 
     def v2_runner_on_failed(self, result, ignore_errors=False):
@@ -62,6 +70,6 @@ class CallbackModule(CallbackBase):
                    'task_output' : result._result['msg']
                   }
         
-        print('Sending to endpoint:\n{0}\n'.format(requests.post(self.callback_url, auth=(self.username,self.password), data=payload).json()))
+        print('On a failed task - Sending to endpoint:\n{0}\n'.format(requests.post(self.callback_url, auth=(self.username,self.password), data=payload).json()))
         pass
         

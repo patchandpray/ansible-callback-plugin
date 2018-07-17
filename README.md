@@ -11,20 +11,18 @@ We will be using a mock api server to be found in the api\_server directory to h
 
 ## Configuration parameters
 
+It is possible to expose configuration parameters to the callback plugin as extra\_vars or from playbook variables.
+
 - API Endpoint url
 - username
 - password
 - validate certs
 
-possibly via configuration file:
 
 [inputs]
 callback\_url = the api endpoint callback url
 username = the username for api authentication
 password = the password for api authentication
-validate\_certs = whether to validate api endpoint SSL certificates
-
-Can also be extracted from playbook variables
 
 ## Output configuration
 
