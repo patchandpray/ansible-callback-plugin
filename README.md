@@ -22,11 +22,10 @@ callback\_url = the api endpoint callback url
 username = the username for api authentication
 password = the password for api authentication
 
-## Output configuration
+## Outputs
 
-Ideally an arbitrary number of output parameters can be configured by using an external configuration file.
+For tasks the current payload is sent to the API backend
 
-[outputs]  
 state = success or failed  
 task\_name = the name of the task that was succesfull or failed  
 task\_output = the output of the task  
@@ -49,6 +48,13 @@ All default available callback\_plugins can be found in your ansible install loc
 ## How to run
 
 Be sure to have the api\_server provided running or have your own API endpoint available which supports the fields {'state, 'task\_name', task\_output'}
+
+Using the provided api\_server:
+* `python3 -m venv env` or `virtualenv env` (for python2.x)
+* `source env/bin/activate`
+* `pip install -r requirements.txt`
+* optionally configure api server defaults in server\_config.ini
+* `make run`
 
 ### Using Makefile
 `make playbook`  

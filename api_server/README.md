@@ -2,7 +2,7 @@
 
 ## Configure the server
 
-Using the server\_config.ini file placed next to the server.py python file
+Using the server\_config.ini file
 
 ### configuration parameters
 host = the ip address the server should serve from - default: 0.0.0.0
@@ -12,13 +12,13 @@ password = the password for basic auth - default: password
 
 ## To run the server
 
-setup python virtualenv `virtualenv env`
-install requirements `pip install -r requirements.txt`
-source virtual env `source env/bin/activate`
-run the mock server using `make run`
+* `python3 -m venv env` or `virtualenv env` (for python2.x)
+* `source env/bin/activate`
+* `pip install -r requirements.txt`
+* optionally configure api server defaults in server\_config.ini
+* `make run`
 
 ### available functions
 
-post using `make post` (requires auth)
-
-list using `make list`
+* post using `make post` (requires auth)
+* list using `make list`
