@@ -12,7 +12,6 @@ app = Flask(__name__)
 auth = HTTPBasicAuth()
 api = Api(app)
 
-
 # api in memory endpoints
 tasks = {
         '1': {'task_name': 'sometask',
@@ -20,7 +19,6 @@ tasks = {
               'state': 'failed'}
         }
     
-
 # parser configuration for POST request
 parser = reqparse.RequestParser()
 parser.add_argument('task_name')
@@ -75,6 +73,5 @@ if __name__ == "__main__":
             username: password
             }
 
-               
     # start up the server
     app.run(debug=debug_enabled, host=host, port=port) 

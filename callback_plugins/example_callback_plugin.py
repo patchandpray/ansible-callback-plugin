@@ -21,7 +21,7 @@ DOCUMENTATION = '''
     short_description: Send callback on various runners to an API endpoint.
     description:
       - On ansible runner calls report state and task output to an API endpoint.
-      - Configuration via callback_config.ini, place the file in the same directory 
+      - Configuration via callback_config.ini, place the file in the same directory
         as the plugin.
     requirements:
       - python requests library
@@ -67,7 +67,6 @@ class CallbackModule(CallbackBase):
                    'task_name': result.task_name,
                    'task_output' : result._result['msg']
                   }
-        
+
         print('On a failed task - Sending to endpoint:\n{0}\n'.format(requests.post(self.callback_url, auth=(self.username,self.password), data=payload).json()))
         pass
-        
