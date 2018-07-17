@@ -40,8 +40,6 @@ class CallbackModule(CallbackBase):
     CALLBACK_NAME = 'example_callback_plugin'
 
     def __init__(self, *args, **kwargs):
-      
-        # TODO - implement config parsing for variables
         super(CallbackModule, self).__init__()
 
     def v2_playbook_on_start(self, playbook):
