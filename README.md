@@ -17,10 +17,10 @@ It is possible to expose configuration parameters to the callback plugin as extr
 - username
 - password
 
-[extra\_vars]
-callback\_url = the api endpoint callback url
-username = the username for api authentication
-password = the password for api authentication
+[extra\_vars]  
+callback\_url = the api endpoint callback url  
+username = the username for api authentication  
+password = the password for api authentication  
 
 ## Outputs
 
@@ -49,6 +49,7 @@ All default available callback\_plugins can be found in your ansible install loc
 
 Be sure to have the api\_server provided running or have your own API endpoint available which supports the fields {'state, 'task\_name', task\_output'}
 
+### Setup api server
 Using the provided api\_server:
 * `python3 -m venv env` or `virtualenv env` (for python2.x)
 * `source env/bin/activate`
@@ -56,9 +57,9 @@ Using the provided api\_server:
 * optionally configure api server defaults in server\_config.ini
 * `make run`
 
-### Using Makefile
+### Run the callback plugin using Makefile
 `make playbook`  
 You might have to change the extra vars passed for that makefile target to fit your configuration.
 
-### Manual
+### Or run Manual
 `ansible-playbook playbook.yml -e callback_url=<http://api_host:port/tasks> -e username=<basic_auth_username> -e password=<basic_auth_password>`
