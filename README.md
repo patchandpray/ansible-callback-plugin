@@ -5,7 +5,7 @@ of every task to an API endpoint.
 
 The plugin will record the play and upon detecting a succesfull or failed task will be triggered to store the output of that task and send it using the python requests module to an API endpoint.
 
-Configuration of the plugin will occur via plugin\_config.ini to be placed next to the plugin itself.
+Configuration of the plugin is done by passing extra\_vars to the playbook that will use the callback plugin.
 
 We will be using a mock api server to be found in the api\_server directory to handle the requests that we send to it to demonstrate the working of the callback plugin.
 
