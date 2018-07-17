@@ -58,7 +58,7 @@ Using the provided api\_server:
 * `make run`
 
 ### Run the callback plugin using Makefile
-Be sure to run from virtualenv as python requests library is required.
+Be sure to run from virtualenv as python requests library is required.  
 `make playbook`  
 You might have to change the extra vars passed for that makefile target to fit your configuration.
 
