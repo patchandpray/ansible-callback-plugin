@@ -30,16 +30,16 @@ Can also be extracted from playbook variables
 
 Ideally an arbitrary number of output parameters can be configured by using an external configuration file.
 
-[outputs]
-state = success or failed
-task\_name = the name of the task that was succesfull or failed
-task\_output = the output of the task
+[outputs]  
+state = success or failed  
+task\_name = the name of the task that was succesfull or failed  
+task\_output = the output of the task  
 
 ## How it works
 
 The custom ansible callback plugin is to be placed in a directory called callback\_plugins in the directory where the playbook is run from.
 In the ansible.cfg file specify the custom callback\_plugins directory:
-[defaults]
+[defaults]  
 callback\_plugins = ./callback\_plugins
 
 Every callback plugin there of type notification will be picked up and run for all the runner calls it is configured for.
