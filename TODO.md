@@ -1,9 +1,12 @@
 - have playbook send stats from endofplay to this endpoint
+- be able to send data to a endpoint for plays
 - implement async timeout somewhere to simulate long running posts
 - find out what impact is on playbook execution for waiting for a post to get through
 - make target for succes
 - make target for failed
 - make target for stats
-- be able to send data to a endpoint for plays
 - make __main__ only run functions
+- provide option for capturing a play with tasks
+- provide option for capturing only tasks and posting tasks seperately
 
+- implement simple db for storing plays and tasks

@@ -44,6 +44,7 @@ class CallbackModule(CallbackBase):
 
     def v2_playbook_on_start(self, playbook):
         self.playbook = playbook
+        print(playbook.__dict__)
 
     def v2_playbook_on_play_start(self, play):
         self.play = play
@@ -59,7 +60,10 @@ class CallbackModule(CallbackBase):
                    'task_name': result.task_name,
                    'task_output' : result._result
                   }
-        print('On a succesfull task - Sending to endpoint:\n{0}\n'.format(requests.post(self.callback_url, auth=(self.username,self.password), data=payload).json()))
+        print('On a succesfull task - Sending to endpoint:\n{0}\n'.
+              format(requests.post(self.callback_url,
+                                   auth=(self.username,self.password),
+                                   data=payload).json()))
         pass
 
     def v2_runner_on_failed(self, result, ignore_errors=False):
@@ -68,5 +72,15 @@ class CallbackModule(CallbackBase):
                    'task_output' : result._result['msg']
                   }
 
-        print('On a failed task - Sending to endpoint:\n{0}\n'.format(requests.post(self.callback_url, auth=(self.username,self.password), data=payload).json()))
+        print('On a failed task - Sending to endpoint:\n{0}\n'
+              .format(requests.post(self.callback_url,
+                                    auth=(self.username,self.password),
+                                    data=payload).json()))
         pass
+
+    def v2_playbook_on_stats(self, stats):
+        hosts = sorted(stats.processed.keys())
+        print(dir(stats))
+        print(stats.__dict__)
+        for host in hosts:
+            print(stats.summarize(host))
